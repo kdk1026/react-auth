@@ -1,0 +1,8 @@
+<설치>
+npm install -g json-server@0.17.4
+npm install -g json-server-auth
+npm install -g express
+
+<실행>
+json-server-auth --watch ./src/db/data.json --port 3001
+json-server-auth --watch ./src/db/data.json --port 3001 -r ./src/db/routes.json

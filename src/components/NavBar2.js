@@ -10,7 +10,7 @@ function NavBar2() {
 
     return (
         <div>
-            <Link to="/posts">게시물</Link>
+            <Link to="/posts">게시물</Link> | <Link to="/mypage">마이페이지</Link>
             <button onClick={onLogout}>로그아웃</button>
         </div>
     )

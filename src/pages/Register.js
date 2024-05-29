@@ -1,6 +1,7 @@
 import { useState } from "react";
 import instance from "../utils/http";
 import { useNavigate } from "react-router-dom";
+import InputField from "../components/InputField";
 
 function Register() {
     const navigate = useNavigate();
@@ -29,8 +30,22 @@ function Register() {
 
     return (
         <div>
-            <input type="text" name="email" placeholder="이메일" onChange={onInputChange} />
-            <input type="password" name="password" placeholder="비밀번호" onChange={onInputChange} />
+            <InputField
+                type="text"
+                className=""
+                name="email"
+                value={inputValue.email}
+                placeholder="이메일"
+                onChange={onInputChange}
+            />
+            <InputField
+                type="password"
+                className=""
+                name="password"
+                value={inputValue.password}
+                placeholder="비밀번호"
+                onChange={onInputChange}
+            />
             <button onClick={onSignUp}>회원가입</button>
         </div>
     )

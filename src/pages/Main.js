@@ -1,10 +1,16 @@
 import { Link } from "react-router-dom";
+import NavBar from "../components/NavBar";
+import NavBar2 from "../components/NavBar2";
 
 function Main() {
+    const accessToken = sessionStorage.getItem('accessToken');
+    
     return (
-        <div>
-            <Link to="/register">회원가입</Link> | <Link to="/login">로그인</Link> | <Link to="/posts">게시물</Link>
-        </div>
+        <>
+            {
+                !accessToken ? <NavBar /> : <NavBar2 />
+            }
+        </>
     )
 }
 

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import instance from "../utils/http";
 import { useNavigate } from "react-router-dom";
 import InputField from "../components/InputField";
@@ -23,6 +23,10 @@ function Login() {
     };
 
     const onLogin = async () => {
+        if ( !inputValidate() ) {
+            return false;
+        }
+
         const { data } = await instance.post('/login', inputValue);
 
         if ( data.accessToken ) {
@@ -35,6 +39,25 @@ function Login() {
         }
     };
 
+    const emailRef = useRef(null);
+    const passwordRef = useRef(null);
+
+    const inputValidate = () => {
+        if ( !inputValue.email ) {
+            alert("이메일을 입력해주세요.");
+            emailRef.current.focus();
+            return false;
+        }
+
+        if ( !inputValue.password ) {
+            alert("비밀번호를 입력해주세요.");
+            passwordRef.current.focus();
+            return false;
+        }
+
+        return true;
+    };
+
     return (
         <div>
             <InputField
@@ -44,6 +67,7 @@ function Login() {
                 value={inputValue.email}
                 placeholder="이메일"
                 onChange={onInputChange}
+                inputRef={emailRef}
             />
             <InputField
                 type="password"
@@ -52,6 +76,7 @@ function Login() {
                 value={inputValue.password}
                 placeholder="비밀번호"
                 onChange={onInputChange}
+                inputRef={passwordRef}
             />
             <button onClick={onLogin}>로그인</button>
         </div>

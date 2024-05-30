@@ -4,7 +4,8 @@ function InputField({
     name,
     value,
     placeholder,
-    onChange
+    onChange,
+    inputRef
 }) {
     return (
         <>
@@ -15,6 +16,7 @@ function InputField({
                 value={value}
                 placeholder={placeholder}
                 onChange={onChange}
+                ref={inputRef}
             />
         </>
     )

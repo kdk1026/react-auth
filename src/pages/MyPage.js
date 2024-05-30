@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 
 function MyPage() {
-    const userInfo = useSelector((state) => state.UserReducer.userInfo);
+    const userInfo = useSelector((state) => state.user.userInfo);
 
     return (
         <div>

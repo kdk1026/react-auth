@@ -1,42 +1,56 @@
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { loadingAction } from "../store/actions/LoadingAction";
 
-const baseURL = `${process.env.REACT_APP_API_URL}`;
+export const useAxios = () => {
+    const dispatch = useDispatch();
 
-const instance = axios.create({
-    baseURL: baseURL
-});
+    const baseURL = `${process.env.REACT_APP_API_URL}`;
 
-instance.interceptors.request.use(
-    (config) => {
-        const accessToken = sessionStorage.getItem('accessToken');
+    const instance = axios.create({
+        baseURL: baseURL
+    });
+    
+    instance.interceptors.request.use(
+        (config) => {
+            loadingAction.setIsLoading(dispatch, true);
 
-        if ( accessToken ) {
-            config.headers.Authorization = `Bearer ${accessToken}`;
+            const accessToken = sessionStorage.getItem('accessToken');
+    
+            if ( accessToken ) {
+                config.headers.Authorization = `Bearer ${accessToken}`;
+            }
+    
+            return config;
+        },
+        (error) => {
+            loadingAction.setIsLoading(dispatch, false);
+
+            console.log(error);
+            return Promise.reject(error);
         }
+    );
+    
+    instance.interceptors.response.use(
+        (response) => {
+            loadingAction.setIsLoading(dispatch, false);
 
-        return config;
-    },
-    (error) => {
-        console.log(error);
-        return Promise.reject(error);
-    }
-);
+            if ( response.status === 404 ) {
+                console.log('404 페이지로 넘어가야 함!');
+            }
+    
+            return response;
+        },
+        async (error) => {
+            loadingAction.setIsLoading(dispatch, false);
 
-instance.interceptors.response.use(
-    (response) => {
-        if ( response.status === 404 ) {
-            console.log('404 페이지로 넘어가야 함!');
+            // console.log(error);
+            if ( error.response?.status === 401 ) {
+                // https://leeseong010.tistory.com/133
+            }
+            return Promise.reject(error);
         }
+    );
 
-        return response;
-    },
-    async (error) => {
-        // console.log(error);
-        if ( error.response?.status === 401 ) {
-            // https://leeseong010.tistory.com/133
-        }
-        return Promise.reject(error);
-    }
-);
-
-export default instance;
+    return {instance};
+};

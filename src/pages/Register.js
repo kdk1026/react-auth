@@ -1,10 +1,15 @@
 import { useRef, useState } from "react";
-import instance from "../utils/http";
+import { useAxios } from "../utils/http";
 import { useNavigate } from "react-router-dom";
 import InputField from "../components/InputField";
+import { useSelector } from "react-redux";
 
 function Register() {
     const navigate = useNavigate();
+
+    const {instance} = useAxios();
+
+    const isLoading = useSelector((state) => state.loading.isLoading);
 
     const [inputValue, setInputValue] = useState({
         email: '',
@@ -66,27 +71,32 @@ function Register() {
     };
 
     return (
-        <div>
-            <InputField
-                type="text"
-                className=""
-                name="email"
-                value={inputValue.email}
-                placeholder="이메일"
-                onChange={onInputChange}
-                inputRef={emailRef}
-            />
-            <InputField
-                type="password"
-                className=""
-                name="password"
-                value={inputValue.password}
-                placeholder="비밀번호"
-                onChange={onInputChange}
-                inputRef={passwordRef}
-            />
-            <button onClick={onSignUp}>회원가입</button>
-        </div>
+        <>
+            {
+                isLoading ? <span>로딩 중</span> :
+                <div>
+                    <InputField
+                        type="text"
+                        className=""
+                        name="email"
+                        value={inputValue.email}
+                        placeholder="이메일"
+                        onChange={onInputChange}
+                        inputRef={emailRef}
+                    />
+                    <InputField
+                        type="password"
+                        className=""
+                        name="password"
+                        value={inputValue.password}
+                        placeholder="비밀번호"
+                        onChange={onInputChange}
+                        inputRef={passwordRef}
+                    />
+                    <button onClick={onSignUp}>회원가입</button>
+                </div>
+            }
+        </>
     )
 }
 

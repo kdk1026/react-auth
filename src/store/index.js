@@ -2,9 +2,11 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import UserReducer from './reducers/UserReducer';
 import sessionStorage from 'redux-persist/es/storage/session';
 import persistReducer from 'redux-persist/es/persistReducer';
+import LoadingReducer from './reducers/LoadingReducer';
 
 const reducers = combineReducers({
-    user: UserReducer
+    user: UserReducer,
+    loading: LoadingReducer
 });
 
 const persistConfig = {

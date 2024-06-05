@@ -1,13 +1,17 @@
 import { useRef, useState } from "react";
-import instance from "../utils/http";
+import { useAxios } from "../utils/http";
 import { useNavigate } from "react-router-dom";
 import InputField from "../components/InputField";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { userAction } from "../store/actions/UserAction";
 
 function Login() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
+
+    const isLoading = useSelector((state) => state.loading.isLoading);
+
+    const {instance} = useAxios();
 
     const [inputValue, setInputValue] = useState({
         email: '',
@@ -59,27 +63,32 @@ function Login() {
     };
 
     return (
-        <div>
-            <InputField
-                type="text"
-                className=""
-                name="email"
-                value={inputValue.email}
-                placeholder="이메일"
-                onChange={onInputChange}
-                inputRef={emailRef}
-            />
-            <InputField
-                type="password"
-                className=""
-                name="password"
-                value={inputValue.password}
-                placeholder="비밀번호"
-                onChange={onInputChange}
-                inputRef={passwordRef}
-            />
-            <button onClick={onLogin}>로그인</button>
-        </div>
+        <>
+            {
+               isLoading ? <span>로딩 중</span> : 
+                <div>
+                    <InputField
+                        type="text"
+                        className=""
+                        name="email"
+                        value={inputValue.email}
+                        placeholder="이메일"
+                        onChange={onInputChange}
+                        inputRef={emailRef}
+                    />
+                    <InputField
+                        type="password"
+                        className=""
+                        name="password"
+                        value={inputValue.password}
+                        placeholder="비밀번호"
+                        onChange={onInputChange}
+                        inputRef={passwordRef}
+                    />
+                    <button onClick={onLogin}>로그인</button>
+                </div>
+            }
+        </>
     )
 }
 

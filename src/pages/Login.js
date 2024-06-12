@@ -34,7 +34,7 @@ function Login() {
         const { data } = await instance.post('/login', inputValue);
 
         if ( data.accessToken ) {
-            sessionStorage.setItem('accessToken', data.accessToken);
+            localStorage.setItem('accessToken', data.accessToken);
             navigate('/posts');
         }
 

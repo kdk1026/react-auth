@@ -4,4 +4,8 @@ function setUserInfo(dispatch, userInfo) {
     dispatch(userActions.setUserInfo(userInfo));
 }
 
-export const userAction = {setUserInfo};
+function removeUserInfo(dispatch) {
+    dispatch(userActions.removeUserInfo());
+}
+
+export const userAction = {setUserInfo, removeUserInfo};

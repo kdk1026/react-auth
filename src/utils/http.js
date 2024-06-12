@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { loadingAction } from "../store/actions/LoadingAction";
+import { jwtDecode } from "jwt-decode";
 
 export const useAxios = () => {
     const dispatch = useDispatch();
@@ -18,6 +19,7 @@ export const useAxios = () => {
             const accessToken = sessionStorage.getItem('accessToken');
     
             if ( accessToken ) {
+                console.log( isTokenExpired(accessToken) );
                 config.headers.Authorization = `Bearer ${accessToken}`;
             }
     
@@ -53,4 +55,23 @@ export const useAxios = () => {
     );
 
     return {instance};
+};
+
+const isTokenExpired = (accessToken) => {
+    if ( !accessToken ) {
+        return true;
+    }
+
+    try {
+        const decodedToken = jwtDecode(accessToken);
+        const currentTime = Date.now() / 1000;
+
+        console.log(currentTime);
+        console.log(decodedToken);
+        
+        return decodedToken.exp < currentTime;
+    } catch (error) {
+        console.error('Error decoding token:', error);
+        return true;
+    }
 };

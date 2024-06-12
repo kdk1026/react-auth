@@ -16,7 +16,7 @@ export const useAxios = () => {
         (config) => {
             loadingAction.setIsLoading(dispatch, true);
 
-            const accessToken = sessionStorage.getItem('accessToken');
+            const accessToken = getToken();
     
             if ( accessToken ) {
                 console.log( isTokenExpired(accessToken) );
@@ -57,6 +57,10 @@ export const useAxios = () => {
     return {instance};
 };
 
+const getToken = () => {
+    return sessionStorage.getItem('accessToken');
+};
+
 const isTokenExpired = (accessToken) => {
     if ( !accessToken ) {
         return true;
@@ -68,7 +72,7 @@ const isTokenExpired = (accessToken) => {
 
         console.log(currentTime);
         console.log(decodedToken);
-        
+
         return decodedToken.exp < currentTime;
     } catch (error) {
         console.error('Error decoding token:', error);

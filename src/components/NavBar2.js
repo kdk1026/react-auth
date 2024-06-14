@@ -1,15 +1,16 @@
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { userAction } from "../store/actions/UserAction";
+import { removeToken } from "../utils/token";
 
 function NavBar2() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const onLogout = () => {
-        sessionStorage.removeItem('accessToken');
-        navigate('/login');
+        removeToken();
         userAction.removeUserInfo(dispatch);
+        navigate('/login');
     };
 
     return (

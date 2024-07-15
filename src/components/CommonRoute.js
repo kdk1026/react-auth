@@ -5,6 +5,7 @@ import Login from "../pages/Login";
 import Posts from "../pages/Posts";
 import EmptyPage from "../pages/EmptyPage";
 import MyPage from "../pages/MyPage";
+import Home from "../pages/Home";
 
 function CommonRoute() {
     return (
@@ -14,6 +15,7 @@ function CommonRoute() {
                 <Route path="/register" element={<Register />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/" element={<Main />}>
+                  <Route path="/main" element={<Home />} />
                   <Route path="/posts" element={<Posts />} />
                   <Route path="/mypage" element={<MyPage />} />
                 </Route>

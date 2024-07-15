@@ -14,8 +14,8 @@ function CommonRoute() {
             <Routes>
                 <Route path="/register" element={<Register />} />
                 <Route path="/login" element={<Login />} />
-                <Route path="/" element={<Main />}>
-                  <Route path="/main" element={<Home />} />
+                <Route element={<Main />}>
+                  <Route path="/" element={<Home />} />
                   <Route path="/posts" element={<Posts />} />
                   <Route path="/mypage" element={<MyPage />} />
                 </Route>

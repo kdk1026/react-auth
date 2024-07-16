@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import { useAxios } from "../utils/http";
 import { useNavigate } from "react-router-dom";
 import InputField from "../components/InputField";
+import { signup } from "../apis/signup";
 
 function Register() {
     const navigate = useNavigate();
@@ -26,7 +27,7 @@ function Register() {
             return false;
         }
         
-        const { data } = await instance.post('/register', inputValue);
+        const { data } = await signup(instance, inputValue);
 
         if ( data.accessToken ) {
             navigate('/login');

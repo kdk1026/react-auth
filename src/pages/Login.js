@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import InputField from "../components/InputField";
 import { useDispatch } from "react-redux";
 import { userAction } from "../store/actions/UserAction";
+import { login } from "../apis/login";
 
 function Login() {
     const navigate = useNavigate();
@@ -29,7 +30,7 @@ function Login() {
             return false;
         }
 
-        const { data } = await instance.post('/login', inputValue);
+        const { data } = await login(instance, inputValue);
 
         if ( data.accessToken ) {
             localStorage.setItem('accessToken', data.accessToken);

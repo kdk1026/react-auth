@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useAxios } from "../utils/http";
 import { useEffect, useState } from "react";
+import { fetchPosts } from "../apis/posts";
 
 function Posts() {
     const navigate = useNavigate();
@@ -11,7 +12,7 @@ function Posts() {
 
     useEffect(() => {
         const getPosts = async () => {
-            await instance.get('/posts')
+            await fetchPosts(instance)
             .then(res => {
                 setPosts(res.data);
             })

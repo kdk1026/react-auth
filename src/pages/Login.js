@@ -10,8 +10,6 @@ function Login() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const {instance} = useAxios();
-
     const [inputValue, setInputValue] = useState({
         email: '',
         password: ''
@@ -30,7 +28,7 @@ function Login() {
             return false;
         }
 
-        const { data } = await login(instance, inputValue);
+        const { data } = await login(inputValue);
 
         if ( data.accessToken ) {
             localStorage.setItem('accessToken', data.accessToken);

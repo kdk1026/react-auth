@@ -1,13 +1,10 @@
 import { useRef, useState } from "react";
-import { useAxios } from "../utils/http";
 import { useNavigate } from "react-router-dom";
 import InputField from "../components/InputField";
 import { signup } from "../apis/signup";
 
 function Register() {
     const navigate = useNavigate();
-
-    const {instance} = useAxios();
 
     const [inputValue, setInputValue] = useState({
         email: '',
@@ -27,7 +24,7 @@ function Register() {
             return false;
         }
         
-        const { data } = await signup(instance, inputValue);
+        const { data } = await signup(inputValue);
 
         if ( data.accessToken ) {
             navigate('/login');

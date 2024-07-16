@@ -1,18 +1,15 @@
 import { useNavigate } from "react-router-dom";
-import { useAxios } from "../utils/http";
 import { useEffect, useState } from "react";
 import { fetchPosts } from "../apis/posts";
 
 function Posts() {
     const navigate = useNavigate();
 
-    const {instance} = useAxios();
-
     const [posts, setPosts] = useState([]);
 
     useEffect(() => {
         const getPosts = async () => {
-            await fetchPosts(instance)
+            await fetchPosts()
             .then(res => {
                 setPosts(res.data);
             })

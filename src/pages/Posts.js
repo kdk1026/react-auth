@@ -8,9 +8,16 @@ function Posts() {
     const [posts, setPosts] = useState([]);
 
     useEffect(() => {
-        const getPosts = async () => {
-            const { data } = await fetchPosts();
-            setPosts(data);
+        const getPosts = () => {
+            fetchPosts()
+            .then(res => {
+                setPosts(res.data);
+            })
+            .catch(err => {
+                if ( err.response.status === 401 ) {
+                    navigate('/login');
+                }
+            });
         };
         getPosts();
     // eslint-disable-next-line

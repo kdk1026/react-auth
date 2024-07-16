@@ -10,9 +10,16 @@ function Posts() {
     const [posts, setPosts] = useState([]);
 
     useEffect(() => {
-        const getPosts = async () => {
-            const { data } = await instance.get('/posts');
-            setPosts(data);
+        const getPosts = () => {
+            instance.get('/posts')
+            .then(res => {
+                setPosts(res.data);
+            })
+            .catch(err => {
+                if ( err.response.status === 401 ) {
+                    navigate('/login');
+                }
+            });
         };
         getPosts();
     // eslint-disable-next-line
